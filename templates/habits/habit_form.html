@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if habit %}
+        Edit Habit | HabitTrack
+    {% else %}
+        New Habit | HabitTrack
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<section class="form-section">
+
+    <div class="container">
+
+        <div class="form-wrapper">
+
+            <div class="form-header">
+
+                <p class="eyebrow">
+                    {% if habit %}
+                        EDIT HABIT
+                    {% else %}
+                        NEW HABIT
+                    {% endif %}
+                </p>
+
+                <h1>
+                    {% if habit %}
+                        Edit your habit
+                    {% else %}
+                        Create a new habit
+                    {% endif %}
+                </h1>
+
+                <p>
+                    {% if habit %}
+                        Update the details of your habit.
+                    {% else %}
+                        Start with something simple and achievable.
+                    {% endif %}
+                </p>
+
+            </div>
+            <br>
+            <form method="POST" class="form-card">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">
+                        Habit name
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value="{{ habit.name|default:'' }}"
+                        placeholder="e.g. Read for 30 minutes"
+                        maxlength="100"
+                        required
+                    >
+                </div>
+                <br>
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="5"
+                        placeholder="Describe your habit..."
+                    >{{ habit.description|default:'' }}</textarea>
+
+                    <span class="field-help">
+                        Add a short description to help you remember your goal.
+                    </span>
+
+                </div>
+                <br>
+                {% if habit %}
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+
+                            <input
+                                type="checkbox"
+                                name="is_active"
+                                {% if habit.is_active %}checked{% endif %}
+                            >
+
+                            <span>
+                                Keep this habit active
+                            </span>
+
+                        </label>
+                    </div>
+
+                {% endif %}
+
+                <div class="form-actions">
+
+                    <a
+                        href="{% if habit %}{% url 'habit-detail' habit.pk %}{% else %}{% url 'habit-list' %}{% endif %}"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+
+                        {% if habit %}
+                            Save Changes
+                        {% else %}
+                            Create Habit
+                        {% endif %}
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}HabitTrack{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="container navbar-content">
+
+            <a href="{% url 'dashboard' %}" class="logo">
+                Habit<span>Track</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'habit-list' %}">My Habits</a>
+                <a href="{% url 'create-habit' %}" class="nav-add">
+                    + Add Habit
+                </a>
+            </nav>
+
+            <div class="user-menu">
+                <a href="#" class="user-avatar">
+                    {{ user.username|first|upper }}
+                </a>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+
+            </div>
+
+        </div>
+    </header>
+
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>© 2026 HabitTrack. Build better habits.</p>
+        </div>
+    </footer>
+
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

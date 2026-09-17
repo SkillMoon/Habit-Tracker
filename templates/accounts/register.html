@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت نام</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+</head>
+<body>
+    <div class="container">
+        <div class="form-box" id="signupForm" >
+            <h2>ساخت حساب کاربری</h2>
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                <input type="text" placeholder="نام کاربری" required name="username">
+                <input type="email" placeholder="ایمیل" required name="email">
+                <input type="password" placeholder="رمز عبور" required name="password">
+                <input type="password" placeholder="رمز عبور" required name="repass">
+                <button type="submit">ثبت‌نام</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

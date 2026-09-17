@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | HabitTrack{% endblock %}
+
+{% block content %}
+
+<section class="dashboard">
+
+    <div class="container">
+
+        <div class="dashboard-header">
+
+            <div>
+                <p class="eyebrow">YOUR DASHBOARD</p>
+
+                <h1>
+                    Welcome back, {{ user.username }} 👋
+                </h1>
+
+                <p class="subtitle">
+                    Stay consistent and keep building better habits.
+                </p>
+            </div>
+
+            <a href="{% url 'create-habit' %}" class="btn btn-primary">
+                + New Habit
+            </a>
+
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">◎</div>
+
+                <div>
+                    <p class="stat-label">Total Habits</p>
+                    <h2>{{ habits.count }}</h2>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">✓</div>
+
+                <div>
+                    <p class="stat-label">Completed Today</p>
+                    <h2>{{ completed_today }}</h2>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">↗</div>
+
+                <div>
+                    <p class="stat-label">Success Rate</p>
+                    <h2>{{ completion_rate }}%</h2>
+                </div>
+            </div>
+
+        </div>
+
+
+        <section class="habits-section">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Today's Habits</h2>
+
+                    <p>
+                        Keep your streak alive.
+                    </p>
+                </div>
+
+                <a href="#" class="view-all">
+                    View all →
+                </a>
+
+            </div>
+
+
+            <div class="habit-list">
+
+                {% for habit in habits %}
+
+                    <article class="habit-card">
+
+                        <div class="habit-main">
+
+                            <div class="habit-status">
+                                <button class="check-button">
+                                    ✓
+                                </button>
+                            </div>
+
+                            <div class="habit-info">
+
+                                <h3>
+                                    <a href="{% url 'habit-detail' habit.pk %}">
+                                        {{ habit.name }}
+                                    </a>
+                                </h3>
+
+                                {% if habit.description %}
+                                    <p>
+                                        {{ habit.description|truncatechars:80 }}
+                                    </p>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="habit-meta">
+
+                            <span class="streak">
+                                🔥 {{ habit.streak }} day streak
+                            </span>
+
+                            <a
+                                href="{% url 'habit_detail' habit.pk %}"
+                                class="details-link"
+                            >
+                                Details
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% empty %}
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">◎</div>
+
+                        <h3>No habits yet</h3>
+
+                        <p>
+                            Start with one small habit and build from there.
+                        </p>
+                        <a
+                            href="{% url 'create-habit' %}"
+                            class="btn btn-primary"
+                        >
+                            Create your first habit
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </div>
+
+</section>
+
+{% endblock %}

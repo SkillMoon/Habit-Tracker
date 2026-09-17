@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}My Habits | HabitTrack{% endblock %}
+
+{% block content %}
+
+<section class="page-section">
+
+    <div class="container">
+
+        <div class="page-header">
+
+            <div>
+                <p class="eyebrow">YOUR HABITS</p>
+
+                <h1>My Habits</h1>
+
+                <p class="subtitle">
+                    Manage your habits and keep your progress on track.
+                </p>
+            </div>
+
+            <a href="#" class="btn btn-primary">
+                + New Habit
+            </a>
+
+        </div>
+
+
+        <div class="habit-list">
+
+            {% for habit in habits %}
+
+                <article class="habit-card">
+
+                    <div class="habit-main">
+
+                        <div class="check-button">
+                            {% if habit.completed_today %}
+                                ✓
+                            {% endif %}
+                        </div>
+
+                        <div class="habit-info">
+
+                            <h3>
+                                <a href="#">
+                                    {{ habit.name }}
+                                </a>
+                            </h3>
+
+                            {% if habit.description %}
+                                <p>
+                                    {{ habit.description|truncatechars:100 }}
+                                </p>
+                            {% else %}
+                                <p>No description provided.</p>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="habit-meta">
+
+                        <span class="streak">
+                            🔥 {{ habit.streak }} day streak
+                        </span>
+
+                        {% if habit.is_active %}
+                            <span class="status active">
+                                Active
+                            </span>
+                        {% else %}
+                            <span class="status inactive">
+                                Inactive
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">◎</div>
+
+                    <h3>You don't have any habits</h3>
+
+                    <p>
+                        Create your first habit and start building consistency.
+                    </p>
+
+                    <a href="#" class="btn btn-primary">
+                        Create Habit
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

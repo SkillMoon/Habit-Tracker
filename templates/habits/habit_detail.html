@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ habit.name }} | HabitTrack{% endblock %}
+
+{% block content %}
+
+<section class="page-section">
+
+    <div class="container">
+
+        <div class="back-link">
+            <a href="{% url 'habit-list' %}">
+                ← Back to habits
+            </a>
+        </div>
+
+
+        <!-- Habit Header -->
+
+        <div class="detail-header">
+
+            <div>
+
+                <div class="detail-title-row">
+
+                    <h1>{{ habit.name }}</h1>
+
+                    {% if habit.is_active %}
+                        <span class="status active">
+                            Active
+                        </span>
+                    {% else %}
+                        <span class="status inactive">
+                            Inactive
+                        </span>
+                    {% endif %}
+
+                </div>
+
+                {% if habit.description %}
+                    <p class="subtitle">
+                        {{ habit.description }}
+                    </p>
+                {% endif %}
+
+                <p class="created-date">
+                    Created {{ habit.created_at|date:"F d, Y" }}
+                </p>
+
+            </div>
+
+
+            <div class="detail-actions">
+
+                <a
+                    href="#"
+                    class="btn btn-secondary"
+                >
+                    Edit
+                </a>
+
+                <a
+                    href="#"
+                    class="btn btn-danger"
+                >
+                    Delete
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Statistics -->
+
+        <div class="stats-grid detail-stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🔥
+                </div>
+
+                <div>
+                    <p class="stat-label">Current Streak</p>
+                    <h2>{{ habit.streak }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <p class="stat-label">Total Completions</p>
+                    <h2>{{ total_completions }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    %
+                </div>
+
+                <div>
+                    <p class="stat-label">Completion Rate</p>
+                    <h2>{{ completion_rate }}%</h2>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Today's Status -->
+
+        <div class="detail-card">
+
+            <div class="detail-card-header">
+
+                <div>
+                    <h2>Today's Progress</h2>
+                    <p>Did you complete this habit today?</p>
+                </div>
+
+                {% if completed_today %}
+
+                    <span class="completion-badge">
+                        ✓ Completed
+                    </span>
+
+                {% else %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Mark as Complete
+                        </button>
+
+                    </form>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- History -->
+
+        <div class="detail-card">
+
+            <div class="detail-card-header">
+
+                <div>
+                    <h2>History</h2>
+                    <p>Your recent habit activity.</p>
+                </div>
+
+            </div>
+
+
+            <div class="log-list">
+
+                {% for log in logs %}
+
+                    <div class="log-item">
+                        <div class="log-date">
+                            <strong>
+                                {{ log.date|date:"M d" }}
+                            </strong>
+
+                            <span>
+                                {{ log.date|date:"Y" }}
+                            </span>
+                        </div>
+
+
+                        <div class="log-status">
+
+                            {% if log.completed %}
+
+                                <span class="completion-badge">
+                                    ✓ Completed
+                                </span>
+
+                            {% else %}
+
+                                <span class="status inactive">
+                                    Not completed
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty-history">
+                        No activity has been recorded yet.
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

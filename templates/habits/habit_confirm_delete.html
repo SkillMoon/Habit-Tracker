@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Habit | HabitTrack{% endblock %}
+
+{% block content %}
+
+<section class="form-section">
+
+    <div class="container">
+
+        <div class="confirm-card">
+
+            <div class="confirm-icon">
+                !
+            </div>
+
+            <p class="eyebrow">DELETE HABIT</p>
+
+            <h1>Delete "{{ habit.name }}"?</h1>
+
+            <p>
+                This action cannot be undone.
+                All activity logs associated with this habit may also be removed.
+            </p>
+
+            <form method="POST" action="{% url 'delete-habit' habit.pk %}">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <a
+                        href="{% url 'habit-detail' habit.pk %}"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                    >
+                        Yes, Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
