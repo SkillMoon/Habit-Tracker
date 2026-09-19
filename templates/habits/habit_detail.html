@@ -14,7 +14,6 @@
             </a>
         </div>
 
-
         <!-- Habit Header -->
 
         <div class="detail-header">
@@ -53,14 +52,14 @@
             <div class="detail-actions">
 
                 <a
-                    href="#"
+                    href="{% url 'update-habit' habit.pk %}"
                     class="btn btn-secondary"
                 >
                     Edit
                 </a>
 
                 <a
-                    href="#"
+                    href="{% url 'delete-habit' habit.pk %}"
                     class="btn btn-danger"
                 >
                     Delete
@@ -83,35 +82,7 @@
 
                 <div>
                     <p class="stat-label">Current Streak</p>
-                    <h2>{{ habit.streak }}</h2>
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    ✓
-                </div>
-
-                <div>
-                    <p class="stat-label">Total Completions</p>
-                    <h2>{{ total_completions }}</h2>
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    %
-                </div>
-
-                <div>
-                    <p class="stat-label">Completion Rate</p>
-                    <h2>{{ completion_rate }}%</h2>
+                    <h2>{{ habit.current_streak }}</h2>
                 </div>
 
             </div>

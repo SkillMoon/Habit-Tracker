@@ -35,7 +35,7 @@
 
                 <div>
                     <p class="stat-label">Total Habits</p>
-                    <h2>{{ habits.count }}</h2>
+                    <h2>{{ user.habits.count }}</h2>
                 </div>
             </div>
 
@@ -74,7 +74,7 @@
                     </p>
                 </div>
 
-                <a href="#" class="view-all">
+                <a href="{% url 'habit-list' %}" class="view-all">
                     View all →
                 </a>
 
@@ -117,11 +117,11 @@
                         <div class="habit-meta">
 
                             <span class="streak">
-                                🔥 {{ habit.streak }} day streak
+                                🔥 {{ habit.current_streak }} day streak
                             </span>
 
                             <a
-                                href="{% url 'habit_detail' habit.pk %}"
+                                href="{% url 'habit-detail' habit.pk %}"
                                 class="details-link"
                             >
                                 Details

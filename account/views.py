@@ -1,3 +1,5 @@
+from datetime import date
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView as Login
 from django.http import Http404
@@ -6,6 +8,8 @@ from django.views import View
 import account.validation
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
+
+from habit.models import HabitLog, Habit
 
 
 class RegisterView(View):
@@ -31,9 +35,15 @@ class LoginView(Login):
     redirect_authenticated_user = True
     success_url = reverse_lazy('dashboard')
 
-class DashboardView(View):
+class DashboardView(LoginRequiredMixin, View):
     template_name = 'accounts/dashboard.html'
     def get(self, request):
-        return render(request, self.template_name, {'user' : request.user})
+        completed_today = HabitLog.get_completed_today(request.user)
+        completion_rate = HabitLog.get_completion_rate(completed_today, request.user)
+        habits = Habit.objects.filter(user=request.user)
+        return render(request, self.template_name, {
+            'user' : request.user, 'completed_today' : completed_today,
+            'completion_rate' : completion_rate, 'habits' : habits,
+        })
 
 

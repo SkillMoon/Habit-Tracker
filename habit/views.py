@@ -59,3 +59,17 @@ class DeleteHabitView(LoginRequiredMixin, View):
         habit = get_object_or_404(Habit, pk=pk)
         habit.delete()
         return redirect('habit-list')
+
+class HabitDetailView(LoginRequiredMixin, View):
+    template_name = 'habits/habit_detail.html'
+
+    def get(self, request, pk):
+        habit = get_object_or_404(Habit, pk=pk)
+        return render(request, self.template_name, {'habit': habit})
+
+class HabitListView(LoginRequiredMixin, View):
+    template_name = 'habits/habit_list.html'
+
+    def get(self, request):
+        habits = Habit.objects.filter(user=request.user)
+        return render(request, self.template_name, {'habits': habits})
