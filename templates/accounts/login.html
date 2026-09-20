@@ -1,24 +1,24 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ورود به حساب</title>
+    <title>login</title>
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 </head>
 <body>
     <div class="container">
         <div class="form-box" id="loginForm">
-            <h2>ورود به حساب</h2>
+            <h2>Wellcome back</h2>
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
-                <input type="text" placeholder="نام کاربری خود را وارد کنید" required name="username">
-                <input type="password" placeholder="رمز عبور" required name="password">
-                <button type="submit">ورود</button>
+                <input type="text" placeholder="username" required name="username">
+                <input type="password" placeholder="password" required name="password">
+                <button type="submit">login</button>
             </form>
         </div>
         <br>
-        <a href="{% url 'register' %}">ثبت نام</a>
+        <p>Don't have an account? <a href="{% url 'register' %}">register</a></p>
     </div>
 </body>
 </html>

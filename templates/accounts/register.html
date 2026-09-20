@@ -3,25 +3,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ثبت نام</title>
+    <title>register</title>
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 
 </head>
 <body>
     <div class="container">
         <div class="form-box" id="signupForm" >
-            <h2>ساخت حساب کاربری</h2>
+            <h2>create account</h2>
             <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
-                <input type="text" placeholder="نام کاربری" required name="username">
-                <input type="email" placeholder="ایمیل" required name="email">
-                <input type="password" placeholder="رمز عبور" required name="password">
-                <input type="password" placeholder="رمز عبور" required name="repass">
-                <button type="submit">ثبت‌نام</button>
+                <input type="text" placeholder="username" required name="username">
+                <input type="email" placeholder="email" required name="email">
+                <input type="password" placeholder="password" required name="password">
+                <input type="password" placeholder="confirm password" required name="repass">
+                <button type="submit">register</button>
             </form>
         </div>
         <br>
-        <a href="{% url 'login' %}">حساب کاربری دارید؟ وارد شوید</a>
+        <p>Already have an account? <a href="{% url 'login' %}">login</a></p>
     </div>
 </body>
 </html>
