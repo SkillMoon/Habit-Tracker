@@ -1,8 +1,10 @@
+import datetime
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from habit.models import Habit
+from habit.models import Habit, HabitLog
 
 
 class CreateHabitView(LoginRequiredMixin, View):
@@ -65,7 +67,17 @@ class HabitDetailView(LoginRequiredMixin, View):
 
     def get(self, request, pk):
         habit = get_object_or_404(Habit, pk=pk)
-        return render(request, self.template_name, {'habit': habit})
+        logs = HabitLog.objects.filter(habit=habit)
+        return render(request, self.template_name, {'habit': habit, 'logs' : logs})
+
+    def post(self, request, pk):
+        habit = get_object_or_404(Habit, pk=pk)
+        today = datetime.date.today()
+        if HabitLog.check_exist(habit):
+            habit_log = HabitLog.objects.create(habit=habit, date=today)
+            return redirect('habit-detail', pk=pk)
+        else:
+            return HttpResponse('you\'ve already checked out this habit')
 
 class HabitListView(LoginRequiredMixin, View):
     template_name = 'habits/habit_list.html'

@@ -21,7 +21,7 @@
                 <br>
             </div>
 
-            <a href="#" class="btn btn-primary">
+            <a href="{% url 'create-habit' %}" class="btn btn-primary">
                 + New Habit
             </a>
 
@@ -36,16 +36,10 @@
 
                     <div class="habit-main">
 
-                        <div class="check-button">
-                            {% if habit.completed_today %}
-                                ✓
-                            {% endif %}
-                        </div>
-
                         <div class="habit-info">
 
                             <h3>
-                                <a href="#">
+                                <a href="{% url 'habit-detail' habit.pk %}">
                                     {{ habit.name }}
                                 </a>
                             </h3>
@@ -66,7 +60,7 @@
                     <div class="habit-meta">
 
                         <span class="streak">
-                            🔥 {{ habit.streak }} day streak
+                            🔥 {{ habit.current_streak }} day streak
                         </span>
 
                         {% if habit.is_active %}
@@ -94,10 +88,6 @@
                     <p>
                         Create your first habit and start building consistency.
                     </p>
-
-                    <a href="#" class="btn btn-primary">
-                        Create Habit
-                    </a>
 
                 </div>
 

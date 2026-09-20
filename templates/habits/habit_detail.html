@@ -109,9 +109,8 @@
 
                 {% else %}
 
-                    <form method="POST">
+                    <form method="POST" action="{% url 'mark-as-complete' habit.pk %}">
                         {% csrf_token %}
-
                         <button
                             type="submit"
                             class="btn btn-primary"
@@ -159,20 +158,6 @@
 
 
                         <div class="log-status">
-
-                            {% if log.completed %}
-
-                                <span class="completion-badge">
-                                    ✓ Completed
-                                </span>
-
-                            {% else %}
-
-                                <span class="status inactive">
-                                    Not completed
-                                </span>
-
-                            {% endif %}
 
                         </div>
 

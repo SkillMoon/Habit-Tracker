@@ -60,8 +60,21 @@ class HabitLog(models.Model):
     @classmethod
     def get_completion_rate(cls, completed_today, user):
         habits = Habit.objects.filter(user=user).count()
-        success_rate = completed_today / habits * 100
-        return int(success_rate)
+        if habits != 0:
+            success_rate = completed_today / habits * 100
+            return int(success_rate)
+        return 0
+
+    @classmethod
+    def check_exist(cls, habit):
+        today = datetime.date.today()
+        try:
+            habit_log = HabitLog.objects.get(habit=habit, date=today)
+            if habit_log:
+                return False
+        except HabitLog.DoesNotExist:
+            return True
+
 
     class Meta:
         verbose_name = _('habit log')
